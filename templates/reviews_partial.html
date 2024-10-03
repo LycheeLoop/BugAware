@@ -1,0 +1,87 @@
+<!-- Only includes the part for reviews and overall rating, no base extension -->
+
+
+<!-- Content section 2/ Google api results/reviews-->
+<div class="container mt-5" id="results-section">
+    <!-- Overall Rating -->
+    {% if search_performed %}
+        <!-----------Check if name and formatted_address are N/A------------------>
+        {% if name == "N/A" and formatted_address == "N/A" %}
+            <!-----------Warning alert is address and name are N/A ------------------>
+            <div class="alert alert-danger" role="alert">
+                <h4 class="alert-heading">⚠️ Location Not Found</h4>
+                <p>We could not retrieve the name or address for the specified location. Please verify the details and try again.</p>
+            </div>
+        <!-----------Information alert for valid name and address------------------>
+        {% else %}
+            <div class="alert alert-light" role="alert">
+                <h4 class="alert-heading"><span style="font-family: Arial, sans-serif;">{{ name }}</span><br>
+                    <span style="font-size: 14px; font-family: Arial, sans-serif;">{{ formatted_address }}</span></h4>
+
+                <hr>
+                <p class="mb-0"><span style="font-size: 13px;"><strong>Disclaimer</strong> The reviews displayed are the five most relevant reviews
+                    pulled from Google Places, based on mentions of roaches or other pests.
+                    Please note that these reviews may not represent all experiences related to pest issues at this location.
+                    There may be additional reviews containing relevant information which can be found <a href="{{ url }}" target="_blank">here</a>.</span></p>
+            </div>
+
+            <!-- Display overall rating if available -->
+            {% if overall_rating %}
+                <h2 class="mb-4"><span style="font-size: 18px; font-family: Arial, sans-serif;">Overall Google Rating: {{ overall_rating }} Out of 5.0 ({{ reviews_count }}) total reviews</span></h2>
+            {% endif %}
+
+        <!-----------Review cards------------------>
+
+            <div class="row">
+                <!-- Loop through each review and display in a Bootstrap card -->
+                {% if reviews_with_dates %}
+                    {% for review, date in reviews_with_dates %}
+                        <div class="col-md-4 mb-4">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <h5 class="card-title">Rating:
+                                        {% for i in range(review['rating']) %}
+                                            ★
+                                        {% endfor %}
+                                    </h5>
+
+                                    <!-- Add the 'review-text' class for scrollable content -->
+                                    <div class="review-text">
+                                        <p class="card-text">{{ review['text'] }}</p>
+                                    </div>
+                                </div>
+                                <div class="card-footer">
+                                    <small class="text-muted">By {{ review['author_name'] }} on  {{ date }}</small>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <!------ No relevant reviews found ----->
+                    {% if reviews_count > 0 and reviews_count < 40 %}
+                        <div class="alert alert-success" role="alert">
+                            ☆ No reviews specifically mentioning pest issues were found.
+                            You might be in luck! However, it's still a good idea to read all reviews
+                            for {{ name }} <a href="{{ url }}" target="_blank">here</a>.
+                        </div>
+                    {% elif reviews_count >= 10 %}
+                        <div class="alert alert-warning" role="alert">
+                            No recent reviews. However, there are a total of {{ reviews_count }} reviews available on Google. Read all reviews
+                            for {{ name }} <a href="{{ url }}" target="_blank">here</a>.
+                        </div>
+                    {% else %}
+                        <!-------- No reviews available for location ------->
+                        <div class="alert alert-warning" role="alert">
+                            No reviews available.
+                        </div>
+                    {% endif %}
+                {% endif %}
+            </div>
+        {% endif %}
+    {% endif %}
+</div>
+
+
+
+
+

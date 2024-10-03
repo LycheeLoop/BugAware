@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% from 'bootstrap5/form.html' import render_form %}
+{% block content %}
+<!-- ---------------------------- HEADER ------------------------------->
+
+<header class="masthead" style="background-image: url('../static/assets/img/BUGAWARE3.png'); background-size: cover; background-position: center;">
+  <div class="container position-relative px-4 px-lg-5" style="padding-top: 150px;"> <!-- Adjust the padding as needed -->
+    <div class="row gx-4 gx-lg-5 justify-content-center">
+      <div class="col-md-10 col-lg-8 col-xl-7 text-center">
+        <div class="site-heading">
+          <a class="btn btn-primary btn-xl rounded-pill mt-5" href="#scroll" style="background-color: #D4414E; color: white; border: none;">Search</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+
+<!----- --------------Content section 1/ SEARCH SECTION------------------->
+<section id="scroll">
+    <div class="container px-5">
+        <div class="row gx-5 align-items-center">
+            <div class="col-lg-6 order-lg-2">
+                <div class="p-5"><img class="img-fluid" src="static/assets/img/search.png" alt="..." /></div>
+            </div>
+            <div class="col-lg-6 order-lg-1">
+                <div class="p-5">
+                    <h2 class="display-4">Apartment Search</h2>
+                    <p>Moving soon? Before you go, lets see if your apartment complex has a history of unwanted guests.</p>
+
+
+                    <!---- Include form ---->
+                    <form id="search-form" method="POST">
+                        {{ form.hidden_tag() }} <!----CSRF protection---->
+
+                        <!-- Render each field individually -->
+                        <div class="mb-3">
+                            {{ form.apartment_name.label(class="form-label") }}
+                            {{ form.apartment_name(class="form-control") }}
+                        </div>
+                        <div class="mb-3">
+                            {{ form.zip_code.label(class="form-label") }}
+                            {{ form.zip_code(class="form-control", pattern="^\d{5}$") }}
+                        </div>
+
+
+                        <button type="submit" class="btn btn-primary" id="search-button">
+                            Search
+                            <span class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Include the reviews section -->
+<div class="row">
+    {% include 'reviews_partial.html' %}
+</div>
+
+{% endblock %}
+
+
+
+

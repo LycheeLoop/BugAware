@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <title>BugAware - Find Your Next Home, Pest-Free</title>
+        {% block styles %}
+        <!-- Load Bootstrap-Flask CSS here -->
+        {{ bootstrap.load_css() }}
+        <!-- Link to the styles.css here to apply styling to all the child templates.-->
+        <link href="{{ url_for('static', filename='css/styles.css') }}" rel="stylesheet"/>
+        {% endblock %}
+
+
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <!-- Font Awesome icons (free version)-->
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+    <!-- Google fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Catamaran:100,200,300,400,500,600,700,800,900" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,700,700i,900,900i" rel="stylesheet" />
+
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="{{ url_for('static', filename='css/styles.css') }}"
+          rel="stylesheet"
+    />
+
+
+</head>
+
+
+<body>
+    {% block content %}
+    {% endblock %}
+    <!-- Link to the external JavaScript file -->
+    <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
+
+
+    {% block scripts %}{% endblock %}
+</body>
+</html>
